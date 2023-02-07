@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Buy } from 'src/entities/buy.entity';
+import { Buy } from 'src/infraestructure/entities/buy.entity';
 @Injectable()
 export class BuyService {
 
@@ -35,7 +35,7 @@ export class BuyService {
     create(payload: any) {
         this.counterId = this.counterId + 1;
         const newbuys = {
-            id: this.counterId,
+            idBuy: this.counterId,
             ...payload,
         };
         this.buys.push(newbuys);

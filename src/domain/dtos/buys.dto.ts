@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString } from "class-validator";
-import { Product } from "src/entities/product.entity";
+import { Product } from "src/infraestructure/entities/product.entity";
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateBuyDto {
@@ -18,6 +18,7 @@ export class CreateBuyDto {
     readonly products: any[];
 
     @IsNotEmpty()
+    @IsString()
     readonly id: string;
 }
 

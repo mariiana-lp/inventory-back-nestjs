@@ -1,17 +1,17 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
-import { BuyService } from 'src/services/buys.service';
+import { BuyService } from 'src/domain/services/buys.service';
 
 @Controller('buys')
 export class BuyController {
     constructor(private buyService: BuyService){}
 
     @Get()
-    getProducts() {
+    getBuys() {
         return this.buyService.findAll();
     }
 
     @Get(':id')
-    getProduct(@Param('id') id: number) {
+    getBuy(@Param('id') id: number) {
         return this.buyService.findOne(id);
     }
 
