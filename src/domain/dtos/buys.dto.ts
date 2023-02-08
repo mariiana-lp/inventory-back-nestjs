@@ -22,3 +22,7 @@ export class CreateBuyDto {
 }
 
 export class UpdateBuyDto extends PartialType(CreateBuyDto){}
+
+export class ReadBuyDto extends PartialType(CreateBuyDto){
+   idBuy: number; 
+}
