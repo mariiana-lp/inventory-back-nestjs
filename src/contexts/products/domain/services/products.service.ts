@@ -1,5 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Product } from 'src/infraestructure/entities/product.entity';
+import { Observable } from 'rxjs';
+import { Product } from 'src/contexts/products/infraestructure/entities/product.entity';
+import { ReadProductDto } from '../dtos/products.dto';
 
 @Injectable()
 export class ProductService {
@@ -21,7 +23,7 @@ export class ProductService {
     }
 
     findOne(id: number) {
-        const product = this.products.find((item) => item.id == id);
+        const product = this.products.find((p) => p.id == id);
         if (!product) {
             throw new NotFoundException(`product #${id} not found`);
         }

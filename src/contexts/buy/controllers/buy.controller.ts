@@ -1,7 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseFilters } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { BuyService } from '../domain/services/buys.service';
+import { CreateBuyDto, UpdateBuyDto } from '../domain/dtos/buys.dto';
+import { HttpExceptionFilter } from 'src/shared/filters/http-exception.filter';
 
 @Controller('buys')
+@ApiTags('Cases')
+@UseFilters(HttpExceptionFilter)
 export class BuyController {
     constructor(private buyService: BuyService){}
 
@@ -16,12 +21,12 @@ export class BuyController {
     }
 
     @Post()
-    create(@Body() payload: any) {
+    create(@Body() payload: CreateBuyDto) {
         return this.buyService.create(payload);
     }
 
     @Put(':id')
-    update(@Param('id') id: number, @Body() payload: any) {
+    update(@Param('id') id: number, @Body() payload: UpdateBuyDto) {
         return this.buyService.update(id, payload);
     }
 
@@ -30,3 +35,4 @@ export class BuyController {
         return this.buyService.remove(id);
     }
 }
+

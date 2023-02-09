@@ -1,4 +1,4 @@
-import { Product } from "./product.entity";
+import { Product } from "../../../products/infraestructure/entities/product.entity";
 
 export class Buy {
     idBuy: number;

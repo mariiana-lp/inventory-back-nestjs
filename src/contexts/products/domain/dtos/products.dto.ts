@@ -25,8 +25,12 @@ export class CreateProductDto {
     readonly max: number;
 }
 
-export class UpdateProductDto extends PartialType(CreateProductDto) {}
+export class UpdateProductDto extends PartialType(CreateProductDto) {
+    @IsNumber()
+    id: number;
+}
 
 export class ReadProductDto extends PartialType(CreateProductDto) {
-     id: number;
+    @IsNumber()
+    id: number;
 }
