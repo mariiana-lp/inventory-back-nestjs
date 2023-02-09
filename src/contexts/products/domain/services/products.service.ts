@@ -5,11 +5,11 @@ import { Product } from 'src/contexts/products/infraestructure/entities/product.
 @Injectable()
 export class ProductService {
     private counterId = 1;
-    private products: Product[] = [{
+    products: Product[] = [{
         id: 1,
         name: 'Camiseta',
         inInventory: 5,
-        enabled: false,
+        enabled: true,
         min: 2,
         max: 10
     }];

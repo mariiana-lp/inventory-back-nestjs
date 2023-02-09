@@ -1,9 +1,10 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsDate, IsNotEmpty, IsString } from "class-validator";
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateBuyDto {
     @IsNotEmpty()
-    readonly date: Date;
+    @IsDate()
+    readonly date = new Date;
 
     @IsString()
     @IsNotEmpty()
@@ -14,7 +15,10 @@ export class CreateBuyDto {
     readonly clientName: String;
 
     @IsNotEmpty()
-    readonly products: any[];
+    readonly products:[{
+        id: number,
+        quantity: number
+    }];
 
     @IsNotEmpty()
     @IsString()

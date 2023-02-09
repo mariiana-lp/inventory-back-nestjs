@@ -1,5 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { NotAcceptableException } from '@nestjs/common/exceptions';
 import { Buy } from 'src/contexts/buy/infraestructure/entities/buy.entity';
+import { ProductService } from 'src/contexts/products/domain/services/products.service';
+import { ReadBuyDto, CreateBuyDto } from '../dtos/buys.dto';
+import { Product } from '../../../products/infraestructure/entities/product.entity';
 @Injectable()
 export class BuyService {
 
@@ -16,6 +20,16 @@ export class BuyService {
             quantity: 5
         }],
     }];
+    private products: Product[] = [{
+        id: 1,
+        name: 'Camiseta',
+        inInventory: 5,
+        enabled: true,
+        min: 2,
+        max: 10
+    }];
+
+    private productService: ProductService;
 
     findAll() {
         if (this.buys.length < 0) {
@@ -32,14 +46,52 @@ export class BuyService {
         return buys;
     }
 
-    create(payload: any) {
+    async create(payload: CreateBuyDto) {
+        const productEnabled = await this.validateEnabledProducts(payload);
         this.counterId = this.counterId + 1;
-        const newbuys = {
-            idBuy: this.counterId,
-            ...payload,
-        };
-        this.buys.push(newbuys);
-        return newbuys;
+
+        if (productEnabled) {
+            const newbuys = {
+                idBuy: this.counterId,
+                ...payload,
+            };
+            this.buys.push(newbuys);
+            console.log(productEnabled);
+            return (newbuys);
+        }
+        console.log(productEnabled);
+        throw new NotAcceptableException(`Error con el producto que se intenta agregar`);
+
+
+    }
+
+
+    //refactor pendiente
+    validateEnabledProducts(payload: any) {
+
+        const productsBuy = payload.products;
+        let i: any;
+        let bandera = false;
+
+        console.log("entre a la validacion")
+        for (i = 0; i < productsBuy.length; i++) {
+            let val = this.products.find(p => p.id === productsBuy[i].id);
+            let Idproduct = productsBuy[i].id;
+            const indexProduct = this.products.findIndex((i) => i.id = Idproduct)
+
+            if (val == undefined) {
+                throw new NotFoundException(`product with id ${this.products[i].id} not found`);
+            } else if (!this.products[indexProduct].enabled) {
+                throw new NotAcceptableException(`product with id ${this.products[i].id} not enabled`);
+            } else if (!(productsBuy[i].quantity >= this.products[indexProduct].inInventory)) {
+                throw new NotAcceptableException(`product with id ${this.products[i].id}, no stock, at this moment we can only sell ${productsBuy[i].quantity} amount of this product`);
+            } else {
+                bandera = true;
+            }
+
+        }
+
+        return bandera;
     }
 
     update(id: number, payload: any) {
