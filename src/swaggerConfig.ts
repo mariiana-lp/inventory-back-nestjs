@@ -1,8 +1,9 @@
 import { DocumentBuilder } from "@nestjs/swagger";
+import { SwaggerConfig } from "./common/constants/swagger.const";
 
 export const config = new DocumentBuilder()
-    .setTitle('Inventory')
-    .setDescription('The inventory API description')
-    .setVersion('1.0')
-    .addTag('Inventory')
+    .setTitle(SwaggerConfig.title)
+    .setDescription(SwaggerConfig.description)
+    .setVersion(SwaggerConfig.setVersion)
+    .addTag(SwaggerConfig.addtag)
     .build();

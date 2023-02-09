@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Observable } from 'rxjs';
 import { Product } from 'src/contexts/products/infraestructure/entities/product.entity';
-import { ReadProductDto } from '../dtos/products.dto';
+
 
 @Injectable()
 export class ProductService {

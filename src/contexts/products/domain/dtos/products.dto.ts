@@ -26,8 +26,7 @@ export class CreateProductDto {
 }
 
 export class UpdateProductDto extends PartialType(CreateProductDto) {
-    @IsNumber()
-    id: number;
+   
 }
 
 export class ReadProductDto extends PartialType(CreateProductDto) {

@@ -1,7 +1,7 @@
+import { Test, TestingModule } from '@nestjs/testing';
+import { CreateProductDto, ReadProductDto, UpdateProductDto } from '../domain/dtos/products.dto';
 import { ProductsController } from './product.controller';
 import { ProductService } from '../domain/services/products.service';
-import { Test, TestingModule } from '@nestjs/testing';
-import { CreateProductDto, ReadProductDto } from '../domain/dtos/products.dto';
 
 describe('ProductsController', () => {
     let controller: ProductsController;
@@ -37,7 +37,7 @@ describe('ProductsController', () => {
         it("update product successful", () => {
             const dto = new ReadProductDto();
             dto.id = 1;
-            const payload = {
+            const payload: UpdateProductDto = {
                 name: 'Buzo'
             }
             expect(controller.update(dto.id, payload)).not.toBeNull;
