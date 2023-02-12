@@ -1,18 +1,30 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Product } from 'src/contexts/products/infraestructure/entities/product.entity';
+import { min } from 'class-validator';
 
 
 @Injectable()
 export class ProductService {
+
     private counterId = 1;
-    products: Product[] = [{
-        id: 1,
-        name: 'Camiseta',
-        inInventory: 5,
-        enabled: true,
-        min: 2,
-        max: 10
-    }];
+    products: Product[] = [
+        {
+            id: 1,
+            name: 'Camiseta',
+            inInventory: 5,
+            enabled: true,
+            min: 2,
+            max: 10
+        },
+        {
+            id: 2,
+            name: 'pantalon',
+            inInventory: 5,
+            enabled: false,
+            min: 2,
+            max: 10
+        }
+];
 
     findAll() {
         if (this.products.length < 0) {
@@ -62,4 +74,16 @@ export class ProductService {
         this.products.splice(index, 1);
         return true;
     }
+
+    validateMinAndMax(id:number){
+        const index = this.products.findIndex((item) => item.id);
+        let alerta = (this.products[index].inInventory < this.products[index].min) ||
+            (this.products[index].inInventory > this.products[index].max)
+            ? true 
+            : false;
+
+        return alerta;
+    }
+
+
 }
